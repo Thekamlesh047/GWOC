@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <button href="/register.ejs">Student</button>
+        <button href="/teacher_register.ejs">Teacher</button>
+    </div>
+    <div>
+        <!-- Makes POST request to /register route -->
+       <form action="/register" method="POST">
+            <div>
+             <label for="email">Email</label>
+             <input type="email" name="username">
+           </div>
+           <div>
+             <label for="password">Password</label>
+             <input type="password" name="password">
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+</html>
