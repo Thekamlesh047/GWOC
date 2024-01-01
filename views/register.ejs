@@ -7,8 +7,8 @@
 </head>
 <body>
     <div>
-        <button href="/register.ejs">Student</button>
-        <button href="/teacher_register.ejs">Teacher</button>
+        <button><a href="/register">Student</a></button>
+        <button><a href="/teacherregister">Teacher</a></button>
     </div>
     <div>
         <!-- Makes POST request to /register route -->
@@ -20,6 +20,10 @@
            <div>
              <label for="password">Password</label>
              <input type="password" name="password">
+            </div>
+            <div>
+                <label for="conf">Confirm Password</label>
+                <input type="password" name="conf">
             </div>
             <button type="submit">Register</button>
         </form>

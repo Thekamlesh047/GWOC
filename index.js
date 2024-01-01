@@ -23,27 +23,105 @@ app.get("/",(req,res)=>{
     res.render("home.ejs");
 });
   
-app.get("/login.ejs",(req,res)=>{
+app.get("/login",(req,res)=>{
     res.render("login.ejs");
 });
 
 app.post("/login",async (req,res)=>{
-
+   const username= req.body.username;
+   const password=req.body.password;
+    try{
+        const result= await db.query("SELECT * FROM users WHERE email=$1",[username]);
+        if(result.rows.length>0){
+            const userPassword = result.rows[0].password;
+            if(bcrypt.compare(password,userPassword)){
+                res.render("demos.ejs");
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
 });
 
-app.get("/register.ejs",(req,res)=>{
+app.get("/register",(req,res)=>{
     res.render("register.ejs");
 });
 
-app.post("/register.ejs",async (req,res)=>{
+app.post("/register",async (req,res)=>{
     const email=req.body.username;
     const password=req.body.password;
-    let hashedPassword=await bcrypt.hash(password,10);
-    try {
-        await db.query("INSERT INTO users (email,password) VALUES ($1,$2)",[email,hashedPassword]);
-    } catch (err) {
-        console.log(err);        
+    const confirmPassword=req.body.conf;
+    if(password===confirmPassword){
+        try{
+            const hashedPassword=await bcrypt.hash(password,10);
+            await db.query("INSERT INTO users (email,password) VALUES ($1,$2)",[email,hashedPassword]);
+            res.render("demos.ejs");
+        } catch (err) {
+            console.log(err);        
+        }
     }
+});
+
+app.get("/teacherlogin",(req,res)=>{
+    res.render("teacherlogin.ejs");
+});
+
+app.get("/teacherregister",(req,res)=>{
+    res.render("teacherregister.ejs");
+});
+
+app.post("/teacherlogin",async (req,res)=>{
+    const username= req.body.username;
+   const password=req.body.password;
+    try{
+        const result= await db.query("SELECT * FROM teacher_user WHERE email=$1",[username]);
+        if(result.rows.length>0){
+            const userPassword = result.rows[0].password;
+            if(bcrypt.compare(password,userPassword)){
+                res.render("demos.ejs");
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+app.post("/teacherregister",async (req,res)=>{
+    const Email=req.body.username;
+    const Password=req.body.password;
+    const ConfirmPassword=req.body.conf;
+    if(Password===ConfirmPassword){
+      try{
+            const HashedPassword=await bcrypt.hash(Password,10);
+            await db.query("INSERT INTO teacher_user (email,password) VALUES ($1,$2)",[Email,HashedPassword]);
+            res.render("demos.ejs");
+        } catch (err) {
+            console.log(err);        
+        }
+}});
+
+app.get ("/about",(req,res)=>{
+    res.render("about.ejs");
+});
+
+app.get("/home",(req,res)=>{
+    res.render("home.ejs");
+})
+
+app.get ("/achivement",(req,res)=>{
+    res.render("achivement.ejs");
+});
+
+app.get ("/contact",(req,res)=>{
+    res.render("contact.ejs");
+});
+
+app.get ("/demos",(req,res)=>{
+    res.render("demos.ejs");
+});
+
+app.get ("/skills",(req,res)=>{
+    res.render("skills.ejs");
 });
 
 app.listen(port, () => {

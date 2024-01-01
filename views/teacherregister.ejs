@@ -7,12 +7,12 @@
 </head>
 <body>
     <div>
-        <button href="/register.ejs">Student</button>
-        <button href="/teacher_register.ejs">Teacher</button>
+        <button href="/register">Student</button>
+        <button href="/teacherregister">Teacher</button>
     </div>
     <div>
         <!-- Makes POST request to /register route -->
-       <form action="/register" method="POST">
+       <form action="/teacherregister" method="POST">
             <div>
              <label for="email">Email</label>
              <input type="email" name="username">
@@ -20,6 +20,10 @@
            <div>
              <label for="password">Password</label>
              <input type="password" name="password">
+            </div>
+            <div>
+             <label for="conf">Confirm Password</label>
+             <input type="password" name="conf">
             </div>
             <button type="submit">Register</button>
         </form>
